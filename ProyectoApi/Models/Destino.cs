@@ -10,7 +10,7 @@ namespace ProyectoApi.Models
         public Destino()
         {
             Retornos = new HashSet<Retorno>();
-            Salida = new HashSet<Salida>();
+            Salida = new HashSet<Salidum>();
         }
 
         public int IdDestino { get; set; }
@@ -31,6 +31,6 @@ namespace ProyectoApi.Models
         public virtual Unidad IdUnidadNavigation { get; set; }
         public virtual Usuario IdUsuarioRegistroNavigation { get; set; }
         public virtual ICollection<Retorno> Retornos { get; set; }
-        public virtual ICollection<Salida> Salida { get; set; }
+        public virtual ICollection<Salidum> Salida { get; set; }
     }
 }

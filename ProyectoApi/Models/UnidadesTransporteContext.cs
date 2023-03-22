@@ -24,10 +24,10 @@ namespace ProyectoApi.Models
         public virtual DbSet<Destino> Destinos { get; set; }
         public virtual DbSet<Municipio> Municipios { get; set; }
         public virtual DbSet<Retorno> Retornos { get; set; }
-        public virtual DbSet<Salida> Salida { get; set; }
+        public virtual DbSet<Salidum> Salida { get; set; }
         public virtual DbSet<TipoUsuario> TipoUsuarios { get; set; }
         public virtual DbSet<TipoViaje> TipoViajes { get; set; }
-        public virtual DbSet<Unidad> Unidades { get; set; }
+        public virtual DbSet<Unidad> Unidads { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -44,7 +44,7 @@ namespace ProyectoApi.Models
             modelBuilder.Entity<Conductor>(entity =>
             {
                 entity.HasKey(e => e.IdConductor)
-                    .HasName("PK__Conducto__D6D29603369EE44F");
+                    .HasName("PK__Conducto__D6D296031D498121");
 
                 entity.ToTable("Conductor");
 
@@ -94,7 +94,7 @@ namespace ProyectoApi.Models
             modelBuilder.Entity<DatosUsuario>(entity =>
             {
                 entity.HasKey(e => e.IdDatos)
-                    .HasName("PK__DatosUsu__A4BC7BC5AF7D6360");
+                    .HasName("PK__DatosUsu__A4BC7BC5F7A0B4CC");
 
                 entity.ToTable("DatosUsuario");
 
@@ -138,7 +138,7 @@ namespace ProyectoApi.Models
             modelBuilder.Entity<Departamento>(entity =>
             {
                 entity.HasKey(e => e.IdDepartamento)
-                    .HasName("PK__Departam__787A433D84C48C4E");
+                    .HasName("PK__Departam__787A433DB98D6320");
 
                 entity.ToTable("Departamento");
 
@@ -161,7 +161,7 @@ namespace ProyectoApi.Models
             modelBuilder.Entity<Destino>(entity =>
             {
                 entity.HasKey(e => e.IdDestino)
-                    .HasName("PK__Destino__55FFB3D5EAA10187");
+                    .HasName("PK__Destino__55FFB3D55BD0A0CA");
 
                 entity.ToTable("Destino");
 
@@ -219,7 +219,7 @@ namespace ProyectoApi.Models
             modelBuilder.Entity<Municipio>(entity =>
             {
                 entity.HasKey(e => e.IdMunicipio)
-                    .HasName("PK__Municipi__61005978E5867DC4");
+                    .HasName("PK__Municipi__61005978B23DE921");
 
                 entity.ToTable("Municipio");
 
@@ -242,7 +242,7 @@ namespace ProyectoApi.Models
             modelBuilder.Entity<Retorno>(entity =>
             {
                 entity.HasKey(e => e.IdRetorno)
-                    .HasName("PK__Retorno__F7C1B09C6863B3C6");
+                    .HasName("PK__Retorno__F7C1B09C0C898ED2");
 
                 entity.ToTable("Retorno");
 
@@ -263,10 +263,10 @@ namespace ProyectoApi.Models
                     .HasConstraintName("FK__Retorno__IdUsuar__4D94879B");
             });
 
-            modelBuilder.Entity<Salida>(entity =>
+            modelBuilder.Entity<Salidum>(entity =>
             {
                 entity.HasKey(e => e.IdSalida)
-                    .HasName("PK__Salida__5D69EC72D5482CD9");
+                    .HasName("PK__Salida__5D69EC7216E9975C");
 
                 entity.Property(e => e.Fhsalida)
                     .HasColumnType("datetime")
@@ -288,7 +288,7 @@ namespace ProyectoApi.Models
             modelBuilder.Entity<TipoUsuario>(entity =>
             {
                 entity.HasKey(e => e.IdTipoUsuario)
-                    .HasName("PK__TipoUsua__CA04062BF8358029");
+                    .HasName("PK__TipoUsua__CA04062B36D4E6C2");
 
                 entity.ToTable("TipoUsuario");
 
@@ -306,7 +306,7 @@ namespace ProyectoApi.Models
             modelBuilder.Entity<TipoViaje>(entity =>
             {
                 entity.HasKey(e => e.IdTipoViaje)
-                    .HasName("PK__TipoViaj__36DFC203EEE5D2AB");
+                    .HasName("PK__TipoViaj__36DFC203D7290CDD");
 
                 entity.ToTable("TipoViaje");
 
@@ -329,7 +329,9 @@ namespace ProyectoApi.Models
             modelBuilder.Entity<Unidad>(entity =>
             {
                 entity.HasKey(e => e.IdUnidad)
-                    .HasName("PK__Unidades__437725E6B2814B00");
+                    .HasName("PK__Unidad__437725E67D4BD395");
+
+                entity.ToTable("Unidad");
 
                 entity.Property(e => e.Descripcion)
                     .HasMaxLength(60)
@@ -356,16 +358,16 @@ namespace ProyectoApi.Models
                     .HasColumnName("NPlaca");
 
                 entity.HasOne(d => d.IdUsuarioRegistroNavigation)
-                    .WithMany(p => p.Unidades)
+                    .WithMany(p => p.Unidads)
                     .HasForeignKey(d => d.IdUsuarioRegistro)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Unidades__FechaR__32E0915F");
+                    .HasConstraintName("FK__Unidad__FechaReg__32E0915F");
             });
 
             modelBuilder.Entity<Usuario>(entity =>
             {
                 entity.HasKey(e => e.IdUsuario)
-                    .HasName("PK__Usuario__5B65BF97236B02DE");
+                    .HasName("PK__Usuario__5B65BF97052F0284");
 
                 entity.ToTable("Usuario");
 
