@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ProyectoApi.Models
 {
-    public partial class Salidum
+    public partial class Salida
     {
         public int IdSalida { get; set; }
         public int IdDestino { get; set; }

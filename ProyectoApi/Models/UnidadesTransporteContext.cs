@@ -24,7 +24,7 @@ namespace ProyectoApi.Models
         public virtual DbSet<Destino> Destinos { get; set; }
         public virtual DbSet<Municipio> Municipios { get; set; }
         public virtual DbSet<Retorno> Retornos { get; set; }
-        public virtual DbSet<Salidum> Salida { get; set; }
+        public virtual DbSet<Salida> Salida { get; set; }
         public virtual DbSet<TipoUsuario> TipoUsuarios { get; set; }
         public virtual DbSet<TipoViaje> TipoViajes { get; set; }
         public virtual DbSet<Unidad> Unidads { get; set; }
@@ -263,7 +263,7 @@ namespace ProyectoApi.Models
                     .HasConstraintName("FK__Retorno__IdUsuar__4D94879B");
             });
 
-            modelBuilder.Entity<Salidum>(entity =>
+            modelBuilder.Entity<Salida>(entity =>
             {
                 entity.HasKey(e => e.IdSalida)
                     .HasName("PK__Salida__5D69EC7216E9975C");

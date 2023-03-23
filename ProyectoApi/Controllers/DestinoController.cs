@@ -23,7 +23,7 @@ namespace ProyectoApi.Controllers
                                select destino).FirstOrDefault();
          if(destinodb == null)
             {
-                return NotFound($"No se Encontraron Registros con ID{id}.");
+                return NotFound($"No se Encontraron Registros con ID:{id}.");
             }
          return Ok(destinodb);
         }
@@ -80,5 +80,19 @@ namespace ProyectoApi.Controllers
             return Ok(destinodb);
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            Destino? eliminar = new Destino() { IdDestino = id };
+
+            if (eliminar is null)
+            {
+                return BadRequest($"No se encontro Registro Con el ID: {id} que fue Proporcionado");
+
+            }
+            db.Destinos.Remove(eliminar);
+            db.SaveChanges();
+            return Ok();
+        }
     }
 }

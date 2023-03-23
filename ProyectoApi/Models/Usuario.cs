@@ -15,7 +15,7 @@ namespace ProyectoApi.Models
             Destinos = new HashSet<Destino>();
             Municipios = new HashSet<Municipio>();
             Retornos = new HashSet<Retorno>();
-            Salida = new HashSet<Salidum>();
+            Salida = new HashSet<Salida>();
             TipoViajes = new HashSet<TipoViaje>();
             Unidads = new HashSet<Unidad>();
         }
@@ -35,7 +35,7 @@ namespace ProyectoApi.Models
         public virtual ICollection<Destino> Destinos { get; set; }
         public virtual ICollection<Municipio> Municipios { get; set; }
         public virtual ICollection<Retorno> Retornos { get; set; }
-        public virtual ICollection<Salidum> Salida { get; set; }
+        public virtual ICollection<Salida> Salida { get; set; }
         public virtual ICollection<TipoViaje> TipoViajes { get; set; }
         public virtual ICollection<Unidad> Unidads { get; set; }
     }
