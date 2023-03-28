@@ -1,4 +1,4 @@
-﻿namespace ProyectoApi
+﻿namespace ProyectoApi.Dto
 {
     public class SalidaDtoOuput
     {

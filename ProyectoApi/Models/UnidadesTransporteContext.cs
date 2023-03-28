@@ -27,7 +27,7 @@ namespace ProyectoApi.Models
         public virtual DbSet<Salida> Salida { get; set; }
         public virtual DbSet<TipoUsuario> TipoUsuarios { get; set; }
         public virtual DbSet<TipoViaje> TipoViajes { get; set; }
-        public virtual DbSet<Unidad> Unidads { get; set; }
+        public virtual DbSet<Unidad> Unidades { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
