@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProyectoApi.DTOs;
 using ProyectoApi.Models;
 
 namespace ProyectoApi.Controllers
@@ -9,6 +11,12 @@ namespace ProyectoApi.Controllers
     public class TipoUsuariosController : ControllerBase
     {
         private readonly UnidadesTransporteContext db = new UnidadesTransporteContext();
+        private readonly IMapper _mapper;
+        public TipoUsuariosController(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
+
 
         [HttpGet]
         public IEnumerable<Object> Get()
@@ -24,7 +32,7 @@ namespace ProyectoApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(TipoUsuario tipo)
+        public IActionResult Post(TipoUsuarioPostDto tipo)
         {
             if (tipo == null)
             {
@@ -32,7 +40,8 @@ namespace ProyectoApi.Controllers
             }
             try
             {
-                db.TipoUsuarios.Add(tipo);
+                TipoUsuario tipodb = _mapper.Map<TipoUsuario>(tipo);
+                db.TipoUsuarios.Add(tipodb);
                 db.SaveChanges();
             }
             catch (Exception)

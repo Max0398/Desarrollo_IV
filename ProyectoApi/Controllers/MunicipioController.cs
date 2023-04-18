@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProyectoApi.DTOs;
 using ProyectoApi.Models;
 
 namespace ProyectoApi.Controllers
@@ -9,6 +11,12 @@ namespace ProyectoApi.Controllers
     public class MunicipioController : ControllerBase
     {
         private readonly UnidadesTransporteContext db = new UnidadesTransporteContext();
+        private readonly IMapper _mapper;
+
+        public MunicipioController(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
 
         [HttpGet]
         public IEnumerable<Object> GetAll()
@@ -32,7 +40,7 @@ namespace ProyectoApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Put(Municipio municipio)
+        public IActionResult Put(MunicipioPostDto municipio)
         {
             if(municipio is null)
             {
@@ -46,7 +54,9 @@ namespace ProyectoApi.Controllers
 
             try
             {
-                db.Municipios.Add(municipio);
+                Municipio municipiodb = _mapper.Map<Municipio>(municipio);
+
+                db.Municipios.Add(municipiodb);
                 db.SaveChanges();
             }
             catch (Exception ex)

@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProyectoApi.DTOs;
 using ProyectoApi.Models;
 
 namespace ProyectoApi.Controllers
@@ -9,6 +11,13 @@ namespace ProyectoApi.Controllers
     public class DatosUsuarioController : ControllerBase
     {
         private readonly UnidadesTransporteContext db = new UnidadesTransporteContext();
+        private readonly IMapper _mapper;
+
+        public DatosUsuarioController(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
+
 
         [HttpGet]
         public IEnumerable<Object> GetAll()
@@ -32,15 +41,24 @@ namespace ProyectoApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(DatosUsuario datosUsaurio)
+        public IActionResult Post(DatosUsuarioPostDto datosUsaurio)
         {
             if (datosUsaurio.Direccion == null || datosUsaurio.Nombres == null || datosUsaurio.Apellidos == null)
             {
                 return BadRequest("Se Encontraron Campos Vacios");
             }
-            db.DatosUsuarios.Add(datosUsaurio);
-            db.SaveChanges();
-            return Ok();    
+            try
+            {
+                DatosUsuario datosUsuariodb=_mapper.Map<DatosUsuario>(datosUsaurio);
+                db.DatosUsuarios.Add(datosUsuariodb);
+                db.SaveChanges();
+            }
+            catch (Exception ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            
+            return Ok("Guardado");    
 
         }
 

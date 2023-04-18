@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProyectoApi.DTOs;
 using ProyectoApi.Models;
 
 namespace ProyectoApi.Controllers
@@ -9,24 +11,32 @@ namespace ProyectoApi.Controllers
     public class ConductorController : ControllerBase
     {
         private readonly UnidadesTransporteContext db = new UnidadesTransporteContext();
+        private readonly IMapper _mapper;
+        public ConductorController(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
 
         [HttpGet]
         public IEnumerable<Object> GetAll()
         {
-            var Conductores=(from conductor in db.Conductors select conductor).ToList();
+            var Conductores=(from conductor in db.Conductores select conductor).ToList();
             return Conductores;
         }
 
         [HttpPost]
-        public ActionResult Post(Conductor conductor)
+        public ActionResult Post(ConductorPostDto conductor)
         {
             if (conductor.Nombres == "" || conductor.Licencia == "null" || conductor.Nidentificacion == "")
             {
                 return BadRequest("Se Encontaron Campos Vacios Requeridos");
             }
+            
+            Conductor conductordb=_mapper.Map<Conductor>(conductor);
+
                 try
                 {
-                    db.Conductors.Add(conductor);
+                    db.Conductores.Add(conductordb);
                     db.SaveChanges();
                 }
                 catch (Exception ex)
@@ -41,7 +51,7 @@ namespace ProyectoApi.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var Conductor = db.Conductors.Find(id);
+            var Conductor = db.Conductores.Find(id);
 
             if (Conductor == null)
             {
@@ -53,7 +63,7 @@ namespace ProyectoApi.Controllers
         [HttpPut("{id}")]
         public IActionResult PutConductor(int id, Conductor conductor)
         {
-            Conductor? ConductorDb = (from Conductor in db.Conductors
+            Conductor? ConductorDb = (from Conductor in db.Conductores
                                       where Conductor.IdConductor.Equals(id)
                                       select Conductor).FirstOrDefault();
             if(ConductorDb == null)
@@ -84,7 +94,7 @@ namespace ProyectoApi.Controllers
             }
             else
             {
-                db.Conductors.Remove(eliminarDb);
+                db.Conductores.Remove(eliminarDb);
                 db.SaveChanges();
                 return Ok();
             }

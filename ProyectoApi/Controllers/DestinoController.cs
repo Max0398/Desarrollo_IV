@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using ProyectoApi.DTOs;
 using ProyectoApi.Models;
 
 namespace ProyectoApi.Controllers
@@ -8,6 +10,14 @@ namespace ProyectoApi.Controllers
     public class DestinoController : ControllerBase
     {
         private readonly UnidadesTransporteContext db= new UnidadesTransporteContext();
+        private readonly IMapper _mapper;
+
+        public DestinoController(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
+
+
 
         [HttpGet]
         public IEnumerable<Object> GetAll()
@@ -29,7 +39,7 @@ namespace ProyectoApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(Destino destino)
+        public IActionResult Post(DestinoPostDto destino)
         {
             if (destino == null)
             {
@@ -42,7 +52,9 @@ namespace ProyectoApi.Controllers
           
             try
             {
-                db.Destinos.Add(destino);
+                Destino destinodb = _mapper.Map<Destino>(destino);
+
+                db.Destinos.Add(destinodb);
                 db.SaveChanges();
             }
             catch (Exception Ex )

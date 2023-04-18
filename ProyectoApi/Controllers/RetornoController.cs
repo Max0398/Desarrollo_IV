@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using ProyectoApi.DTOs;
 using ProyectoApi.Models;
 
 namespace ProyectoApi.Controllers
@@ -8,6 +10,11 @@ namespace ProyectoApi.Controllers
     public class RetornoController : ControllerBase
     {
         private readonly UnidadesTransporteContext db = new UnidadesTransporteContext();
+        private readonly IMapper _mapper;
+        public RetornoController(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
 
         [HttpGet]
         public IEnumerable<Object> GetAll()
@@ -29,7 +36,7 @@ namespace ProyectoApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Put(Retorno retorno)
+        public IActionResult Pots (RetornoPostDto retorno)
         {
             if(retorno is null)
             {
@@ -38,8 +45,10 @@ namespace ProyectoApi.Controllers
 
             try
             {
-                await db.Retornos.AddAsync(retorno);
-                await db.SaveChangesAsync();
+                Retorno retornodb = _mapper.Map<Retorno>(retorno);
+
+                db.Retornos.AddAsync(retornodb);
+                db.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -50,7 +59,7 @@ namespace ProyectoApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult>Put (int id, Retorno retorno)
+        public IActionResult Put (int id, Retorno retorno)
         {
             Retorno? retornodb = (from retorn in db.Retornos
                                   where retorn.IdRetorno.Equals(id)

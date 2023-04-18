@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using ProyectoApi.Dto;
+using ProyectoApi.DTOs;
 using ProyectoApi.Models;
 
 namespace ProyectoApi.Controllers
@@ -9,10 +11,17 @@ namespace ProyectoApi.Controllers
     public class SalidaController : ControllerBase
     {
         private readonly UnidadesTransporteContext db = new UnidadesTransporteContext();
+        private readonly IMapper _mapper;
+        public SalidaController(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
+
+
         [HttpGet]
         public IActionResult GetAll()
         {
-            var salidas = (from salida in db.Salida
+            var salidas = (from salida in db.Salidas
                            select new SalidaDtoOuput
                            {
                                IdSalida = salida.IdSalida,
@@ -30,7 +39,7 @@ namespace ProyectoApi.Controllers
         [HttpGet ("{id}")]
         public IActionResult GetById(int id)
         {
-            Salida? salida = (from salidadb in db.Salida
+            Salida? salida = (from salidadb in db.Salidas
                               where salidadb.IdSalida.Equals(id)
                               select salidadb).FirstOrDefault();
             if(salida is null)
@@ -41,7 +50,7 @@ namespace ProyectoApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(Salida salida)
+        public IActionResult Post(SalidaPostDto salida)
         {
             if (salida is null)
             {
@@ -54,7 +63,10 @@ namespace ProyectoApi.Controllers
 
             try
             {
-                db.Salida.Add(salida);
+
+                Salida salidadb = _mapper.Map<Salida>(salida);
+
+                db.Salidas.Add(salidadb);
                 db.SaveChanges();
 
             }
@@ -69,7 +81,7 @@ namespace ProyectoApi.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, Salida salida)
         {
-           Salida? salidadb = (from salidaU in db.Salida
+           Salida? salidadb = (from salidaU in db.Salidas
                                where salidaU.IdSalida.Equals (id)
                                select salidaU).FirstOrDefault();    
             if(salidadb is null)
@@ -90,7 +102,7 @@ namespace ProyectoApi.Controllers
             {
                 return NotFound();
             }
-            db.Salida.Remove(eliminardb);
+            db.Salidas.Remove(eliminardb);
             db.SaveChanges();
             return Ok();
         }

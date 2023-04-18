@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProyectoApi.DTOs;
 using ProyectoApi.Models;
 
 namespace ProyectoApi.Controllers
@@ -9,6 +11,13 @@ namespace ProyectoApi.Controllers
     public class DepartamentoController : ControllerBase
     {
         private readonly UnidadesTransporteContext db = new UnidadesTransporteContext();
+        private readonly IMapper _mapper;
+        public DepartamentoController(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
+
+
 
         [HttpGet]
         public IEnumerable<object> Get()
@@ -31,16 +40,28 @@ namespace ProyectoApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(Departamento departamento)
+        public IActionResult Post(DepartamentoPostDto departamento)
         {
             if (departamento.Descripcion== null)
             {
                 return BadRequest("Se Encontraron Campos Vacios");
             }
-            db.Departamentos.Add(departamento);
-            db.SaveChanges();
+            try
+            {
+                Departamento departamentodb=_mapper.Map<Departamento>(departamento);
+
+                db.Departamentos.Add(departamentodb);
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
             return Ok("Guardado Exitoso...");
         }
+
         [HttpPut("{id}")]
         public IActionResult Put( int id,Departamento departamento)
         {

@@ -18,13 +18,13 @@ namespace ProyectoApi.Models
         {
         }
 
-        public virtual DbSet<Conductor> Conductors { get; set; }
+        public virtual DbSet<Conductor> Conductores { get; set; }
         public virtual DbSet<DatosUsuario> DatosUsuarios { get; set; }
         public virtual DbSet<Departamento> Departamentos { get; set; }
         public virtual DbSet<Destino> Destinos { get; set; }
         public virtual DbSet<Municipio> Municipios { get; set; }
         public virtual DbSet<Retorno> Retornos { get; set; }
-        public virtual DbSet<Salida> Salida { get; set; }
+        public virtual DbSet<Salida> Salidas { get; set; }
         public virtual DbSet<TipoUsuario> TipoUsuarios { get; set; }
         public virtual DbSet<TipoViaje> TipoViajes { get; set; }
         public virtual DbSet<Unidad> Unidades { get; set; }
@@ -44,7 +44,7 @@ namespace ProyectoApi.Models
             modelBuilder.Entity<Conductor>(entity =>
             {
                 entity.HasKey(e => e.IdConductor)
-                    .HasName("PK__Conducto__D6D296031D498121");
+                    .HasName("PK__Conducto__D6D29603A7120280");
 
                 entity.ToTable("Conductor");
 
@@ -94,7 +94,7 @@ namespace ProyectoApi.Models
             modelBuilder.Entity<DatosUsuario>(entity =>
             {
                 entity.HasKey(e => e.IdDatos)
-                    .HasName("PK__DatosUsu__A4BC7BC5F7A0B4CC");
+                    .HasName("PK__DatosUsu__A4BC7BC5F408F224");
 
                 entity.ToTable("DatosUsuario");
 
@@ -138,7 +138,7 @@ namespace ProyectoApi.Models
             modelBuilder.Entity<Departamento>(entity =>
             {
                 entity.HasKey(e => e.IdDepartamento)
-                    .HasName("PK__Departam__787A433DB98D6320");
+                    .HasName("PK__Departam__787A433D0BD774CE");
 
                 entity.ToTable("Departamento");
 
@@ -161,7 +161,7 @@ namespace ProyectoApi.Models
             modelBuilder.Entity<Destino>(entity =>
             {
                 entity.HasKey(e => e.IdDestino)
-                    .HasName("PK__Destino__55FFB3D55BD0A0CA");
+                    .HasName("PK__Destino__55FFB3D557302A08");
 
                 entity.ToTable("Destino");
 
@@ -219,7 +219,7 @@ namespace ProyectoApi.Models
             modelBuilder.Entity<Municipio>(entity =>
             {
                 entity.HasKey(e => e.IdMunicipio)
-                    .HasName("PK__Municipi__61005978B23DE921");
+                    .HasName("PK__Municipi__61005978B0EA6F85");
 
                 entity.ToTable("Municipio");
 
@@ -242,7 +242,7 @@ namespace ProyectoApi.Models
             modelBuilder.Entity<Retorno>(entity =>
             {
                 entity.HasKey(e => e.IdRetorno)
-                    .HasName("PK__Retorno__F7C1B09C0C898ED2");
+                    .HasName("PK__Retorno__F7C1B09CE8B0C5E8");
 
                 entity.ToTable("Retorno");
 
@@ -266,7 +266,7 @@ namespace ProyectoApi.Models
             modelBuilder.Entity<Salida>(entity =>
             {
                 entity.HasKey(e => e.IdSalida)
-                    .HasName("PK__Salida__5D69EC7216E9975C");
+                    .HasName("PK__Salida__5D69EC7236CF97F1");
 
                 entity.Property(e => e.Fhsalida)
                     .HasColumnType("datetime")
@@ -288,13 +288,13 @@ namespace ProyectoApi.Models
             modelBuilder.Entity<TipoUsuario>(entity =>
             {
                 entity.HasKey(e => e.IdTipoUsuario)
-                    .HasName("PK__TipoUsua__CA04062B36D4E6C2");
+                    .HasName("PK__TipoUsua__CA04062B347D7B7D");
 
                 entity.ToTable("TipoUsuario");
 
                 entity.Property(e => e.Descripcion)
                     .IsRequired()
-                    .HasMaxLength(50)
+                    .HasMaxLength(60)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Tipo)
@@ -306,7 +306,7 @@ namespace ProyectoApi.Models
             modelBuilder.Entity<TipoViaje>(entity =>
             {
                 entity.HasKey(e => e.IdTipoViaje)
-                    .HasName("PK__TipoViaj__36DFC203D7290CDD");
+                    .HasName("PK__TipoViaj__36DFC2032DFF9CEB");
 
                 entity.ToTable("TipoViaje");
 
@@ -329,7 +329,7 @@ namespace ProyectoApi.Models
             modelBuilder.Entity<Unidad>(entity =>
             {
                 entity.HasKey(e => e.IdUnidad)
-                    .HasName("PK__Unidad__437725E67D4BD395");
+                    .HasName("PK__Unidad__437725E6A82884B3");
 
                 entity.ToTable("Unidad");
 
@@ -367,13 +367,13 @@ namespace ProyectoApi.Models
             modelBuilder.Entity<Usuario>(entity =>
             {
                 entity.HasKey(e => e.IdUsuario)
-                    .HasName("PK__Usuario__5B65BF97052F0284");
+                    .HasName("PK__Usuario__5B65BF9763D1E634");
 
                 entity.ToTable("Usuario");
 
                 entity.Property(e => e.Contrasenia)
                     .IsRequired()
-                    .HasMaxLength(20)
+                    .HasMaxLength(70)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Correo)

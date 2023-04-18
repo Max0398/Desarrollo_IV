@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProyectoApi.DTOs;
 using ProyectoApi.Models;
 
 namespace ProyectoApi.Controllers
@@ -9,7 +11,11 @@ namespace ProyectoApi.Controllers
     public class TipoViajeController : ControllerBase
     {
         private readonly UnidadesTransporteContext db = new UnidadesTransporteContext();
-
+        private readonly IMapper _mapper;
+        public TipoViajeController(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
 
         [HttpGet]
         public IEnumerable<Object> GetAll()
@@ -34,7 +40,7 @@ namespace ProyectoApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(TipoViaje tipoViaje)
+        public IActionResult Post(TipoViajePostDto tipoViaje)
         {
             if (tipoViaje is null)
             {
@@ -47,7 +53,8 @@ namespace ProyectoApi.Controllers
 
             try
             {
-                db.TipoViajes.Add(tipoViaje);
+                TipoViaje tipoViajedb=_mapper.Map<TipoViaje>(tipoViaje);
+                db.TipoViajes.Add(tipoViajedb);
                 db.SaveChanges();
             }
             catch (Exception ex)
